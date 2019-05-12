@@ -1,0 +1,63 @@
+<div id="contenedor">
+
+    <div *ngIf="mensajeInfo" id="mensajesInfo">
+        {{ mensajeInfo }}
+    </div>
+
+    <div *ngIf="mensajeError" id="mensajesError">
+        {{ mensajeError }}
+    </div>
+
+    <div *ngIf="!cargando">
+
+        <div id="encabezadoTabla">
+            Listado de titulares
+        </div>
+
+        <div id="contenedorBoton">
+            <button>Crear titular fisico</button>
+            <button class="botonSecundario">Crear titular jurídico</button>
+        </div>
+
+        <!-- Tabla de cuentas -->
+
+        <table id="disenoDeTabla">
+            <thead>
+                <th>CUIT</th>
+                <th>Tipo</th>
+                <th>DNI</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Razón social</th>
+                <th>Anio fundacion</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let titular of listado">
+                    <td>{{ titular.cuit }}</td>
+                    <td>{{ titular.tipo }}</td>
+
+                    <ng-container *ngIf="titular.tipo == 'FISICO'">
+                        <td>{{ titular.dni }}</td>
+                        <td>{{ titular.nombre }}</td>
+                        <td>{{ titular.apellido }}</td>
+                        <td colspan="2" class="noAplica">No aplica</td>
+                    </ng-container>
+
+                    <ng-container *ngIf="titular.tipo == 'JURIDICO'">
+                        <td colspan="3" class="noAplica">No aplica</td>
+                        <td>{{ titular.razonSocial }}</td>
+                        <td>{{ titular.anioFundacion }}</td>
+                    </ng-container>
+
+                </tr>
+
+                <tr *ngIf="!listado?.length">
+                    <td colspan="7">Sin datos</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
