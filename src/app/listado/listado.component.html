@@ -28,6 +28,7 @@
                 <th>Nombre</th>
                 <th>Razón social</th>
                 <th>Anio fundacion</th>
+                <th>Editar</th>
             </thead>
             <tbody>
                 <tr *ngFor="let titular of listado">
@@ -46,10 +47,15 @@
                         <td>{{ titular.anioFundacion }}</td>
                     </ng-container>
 
+                    <td>
+                        <a (click)="editarTitular(titular.cuit)"
+                           [routerLink]="">Editar</a>
+                    </td>
+
                 </tr>
 
                 <tr *ngIf="!listado?.length">
-                    <td colspan="6">Sin datos</td>
+                    <td colspan="7">Sin datos</td>
                 </tr>
 
             </tbody>

@@ -45,6 +45,10 @@ export class ListadoComponent implements OnInit {
         this.router.navigate(['/crearTitular']);
     }
 
+    editarTitular(cuit : string) {
+        this.router.navigate(['/crearTitular', cuit]);
+    }
+
     /**
      * Muestra un mensa de éxito en pantalla
      * @param mensaje 

@@ -37,6 +37,14 @@ export class TitularService {
         );
     }
 
+    buscarTitular(cuit : string) : Observable<any> {
+        let cuitSinGuiones = this.eliminarGuionesCuit(cuit);
+        return this.http.get( Constantes.ENDPOINT_TITULARES + '/' + cuitSinGuiones ).pipe(
+            map( response => this.respuestaExitosa(response) ),
+            catchError( err => this.capturarExcepcion(err) )
+        );
+    }
+
     private getHeaders() : any {
         let httpHeaders : HttpHeaders = new HttpHeaders({
             'Content-Type' : 'application/json'
@@ -75,6 +83,10 @@ export class TitularService {
         respuesta.procesoExitoso = false;
         respuesta.errores = errores;
         return of(respuesta);
+    }
+
+    private eliminarGuionesCuit(cuit : string) {
+        return cuit.replace(/-/g, '');
     }
 
 }

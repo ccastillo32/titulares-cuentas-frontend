@@ -6,7 +6,8 @@ export class Rutas {
     static RUTAS_APLICACION = [
         {path: '', redirectTo: '/listado', pathMatch: 'full'},
         {path: 'listado', component: ListadoComponent},
-        {path: 'crearTitular', component: CrearTitularComponent}
+        {path: 'crearTitular', component: CrearTitularComponent},
+        {path: 'crearTitular/:cuit', component: CrearTitularComponent}
     ];
 
 }

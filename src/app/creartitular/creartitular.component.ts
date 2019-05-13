@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Constantes } from '../util/constantes';
 import { Titular } from '../model/titular';
@@ -27,13 +28,18 @@ export class CrearTitularComponent implements OnInit {
     anioFundacion: number;
 
     constructor(private service : TitularService,
-                private router : Router) {
+                private router : Router,
+                private activatedRoute : ActivatedRoute) {
 
     }
 
     ngOnInit() {
+        this.getParametrosURL();
         this.titulo = 'Crear titular';
         this.tipo = Constantes.FISICO;
+        if(this.cuit) {
+            this.iniciarDatos();
+        }
     }
 
     getSelectorTipoTitular() : string[] {
@@ -50,7 +56,7 @@ export class CrearTitularComponent implements OnInit {
         
     }
 
-    llamarServicioCreacionTitular(titular: Titular) : void {
+    private llamarServicioCreacionTitular(titular: Titular) : void {
         this.service.crearTitular(titular).subscribe(
             response => {
                 let respuesta : RespuestaServicio = response.value ? response.value as RespuestaServicio
@@ -63,7 +69,7 @@ export class CrearTitularComponent implements OnInit {
                 } else if(respuesta && respuesta.errores) {
                     this.mensajeError = respuesta.getMensaje();
                 } else {
-                    this.mensajeError = "No se puede crear la cuenta en este momento. Intente más tarde";
+                    this.mensajeError = "No se puede crear el titular en este momento. Intente más tarde";
                 }
 
             }
@@ -91,6 +97,34 @@ export class CrearTitularComponent implements OnInit {
 
     private irAlListado() : void {
         this.router.navigate(['/listado']);
+    }
+
+    private getParametrosURL() : void {
+        this.activatedRoute.params.subscribe( params => {
+            this.cuit = params['cuit'];
+        });
+    }
+
+    private 
+
+    private iniciarDatos() : void {
+        this.service.buscarTitular(this.cuit).subscribe(
+            response => {
+                let respuesta : RespuestaServicio = response.value ? response.value as RespuestaServicio
+                                                                   : response as RespuestaServicio;
+                console.log('respuesta servicio');
+                console.log(respuesta);
+                
+                if(respuesta && respuesta.procesoExitoso) {
+                    console.log('iniciar');
+                } else if(respuesta && respuesta.errores) {
+                    this.mensajeError = respuesta.getMensaje();
+                } else {
+                    this.mensajeError = "No se puede consultar el titular en este momento. Intente más tarde";
+                }
+
+            }
+        );
     }
 
 }
