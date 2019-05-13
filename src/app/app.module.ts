@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ListadoComponent } from './listado/listado.component';
 import { Rutas } from './util/rutas';
@@ -13,6 +14,7 @@ import { TitularService } from './service/titularservice';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot( Rutas.RUTAS_APLICACION )
   ],
   providers: [ TitularService ],

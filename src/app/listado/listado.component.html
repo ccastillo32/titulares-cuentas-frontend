@@ -26,8 +26,7 @@
                 <th>CUIT</th>
                 <th>Tipo</th>
                 <th>DNI</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
+                <th>Nombre</th>
                 <th>Razón social</th>
                 <th>Anio fundacion</th>
             </thead>
@@ -38,13 +37,12 @@
 
                     <ng-container *ngIf="titular.tipo == 'FISICO'">
                         <td>{{ titular.dni }}</td>
-                        <td>{{ titular.nombre }}</td>
-                        <td>{{ titular.apellido }}</td>
+                        <td>{{ titular.nombre }} {{ titular.apellido }}</td>
                         <td colspan="2" class="noAplica">No aplica</td>
                     </ng-container>
 
                     <ng-container *ngIf="titular.tipo == 'JURIDICO'">
-                        <td colspan="3" class="noAplica">No aplica</td>
+                        <td colspan="2" class="noAplica">No aplica</td>
                         <td>{{ titular.razonSocial }}</td>
                         <td>{{ titular.anioFundacion }}</td>
                     </ng-container>
@@ -52,7 +50,7 @@
                 </tr>
 
                 <tr *ngIf="!listado?.length">
-                    <td colspan="7">Sin datos</td>
+                    <td colspan="6">Sin datos</td>
                 </tr>
 
             </tbody>

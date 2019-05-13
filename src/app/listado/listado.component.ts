@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { TitularService } from '../service/titularservice';
 import { Titular } from '../model/titular';
+import { RespuestaServicio } from '../service/respuestaservicio';
 
 @Component({
     selector: 'listado',
@@ -26,8 +27,14 @@ export class ListadoComponent implements OnInit {
         this.mostrarCargando(true);
         this.service.listarTitulares().subscribe(
             response => {
-                this.listado = response;
-                this.mostrarMensajeInfo('Total titulares: ' + this.listado.length);
+                let respuesta : RespuestaServicio = response.value ? response.value as RespuestaServicio
+                                                                   : response as RespuestaServicio;
+                if(respuesta.procesoExitoso) {
+                    this.listado = respuesta.data;
+                    this.mostrarMensajeInfo( 'Total titulares: ' + this.listado.length );
+                } else {
+                    this.mostrarMensajeError( 'Ocurrió un error buscando el listado de titulares. Intente más tarde.' );
+                }
             }
         );
     }
