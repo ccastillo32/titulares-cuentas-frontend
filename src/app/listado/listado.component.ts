@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { TitularService } from '../service/titularservice';
 import { Titular } from '../model/titular';
@@ -15,7 +16,8 @@ export class ListadoComponent implements OnInit {
     cargando: boolean;
     listado : Titular[];
 
-    constructor(private service : TitularService) {
+    constructor(private service : TitularService,
+                private router : Router) {
 
     }
 
@@ -37,6 +39,10 @@ export class ListadoComponent implements OnInit {
                 }
             }
         );
+    }
+
+    irACrearTitular() : void {
+        this.router.navigate(['/crearTitular']);
     }
 
     /**

@@ -5,4 +5,9 @@ export class RespuestaServicio {
     procesoExitoso : boolean;
     data : any;
     errores: string[];
+
+    getMensaje() : string {
+        return this.errores[0];
+    }
+
 }
