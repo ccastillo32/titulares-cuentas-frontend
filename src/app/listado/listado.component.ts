@@ -33,7 +33,7 @@ export class ListadoComponent implements OnInit {
                                                                    : response as RespuestaServicio;
                 if(respuesta.procesoExitoso) {
                     this.listado = respuesta.data;
-                    this.mostrarMensajeInfo( 'Total titulares: ' + this.listado.length );
+                    this.mostrarMensajeInfo( 'Total titulares: ' + (this.listado ? this.listado.length : 0) );
                 } else {
                     this.mostrarMensajeError( 'Ocurrió un error buscando el listado de titulares. Intente más tarde.' );
                 }
@@ -47,6 +47,21 @@ export class ListadoComponent implements OnInit {
 
     editarTitular(cuit : string) {
         this.router.navigate(['/crearTitular', cuit]);
+    }
+
+    eliminarTitular(cuit : string) {
+        this.mostrarCargando(true);
+        this.service.eliminarTitular(cuit).subscribe(
+            response => {
+                let respuesta : RespuestaServicio = response.value ? response.value as RespuestaServicio
+                                                                   : response as RespuestaServicio;
+                if(respuesta.procesoExitoso) {
+                    this.listarTitulares();
+                } else {
+                    this.mostrarMensajeError( 'Ocurrió un error eliminando el titular. Intente más tarde.' );
+                }
+            }
+        ); 
     }
 
     /**

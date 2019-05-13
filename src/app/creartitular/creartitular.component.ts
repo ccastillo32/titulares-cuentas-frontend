@@ -39,7 +39,7 @@ export class CrearTitularComponent implements OnInit {
         this.titulo = 'Crear titular';
         this.tipo = Constantes.FISICO;
         if(this.cuit) {
-            this.iniciarDatos();
+            this.iniciarDatosSiCuitExiste();
         }
     }
 
@@ -51,20 +51,22 @@ export class CrearTitularComponent implements OnInit {
         let titular : Titular = this.tipo == Constantes.FISICO ? this.getTitularFisico() 
                                                                : this.getTitularJuridico();
         // TODO: Validar
-        console.log('datos');
-        console.log(titular);
-        this.llamarServicioCreacionTitular(titular);
-        
+        this.llamarServicioCreacion(titular);
+
     }
 
-    private llamarServicioCreacionTitular(titular: Titular) : void {
-        this.service.crearTitular(titular).subscribe(
+    cancelar() : void {
+        this.router.navigate(['/listado']);
+    }
+
+    private llamarServicioCreacion(titular: Titular) : void {
+        let sub = !this.modoEdicion ? this.service.crearTitular(titular)
+                                   : this.service.actualizarTitular(titular);
+        sub.subscribe(
             response => {
                 let respuesta : RespuestaServicio = response.value ? response.value as RespuestaServicio
                                                                    : response as RespuestaServicio;
-                console.log('respuesta servicio');
-                console.log(respuesta);
-                
+
                 if(respuesta && respuesta.procesoExitoso) {
                     this.irAlListado();
                 } else if(respuesta && respuesta.errores) {
@@ -106,16 +108,14 @@ export class CrearTitularComponent implements OnInit {
         });
     }
 
-    private iniciarDatos() : void {
+    private iniciarDatosSiCuitExiste() : void {
         this.modoEdicion = true;
         this.titulo = 'Editar titular';
         this.service.buscarTitular(this.cuit).subscribe(
             response => {
                 let respuesta : RespuestaServicio = response.value ? response.value as RespuestaServicio
                                                                    : response as RespuestaServicio;
-                console.log('respuesta servicio');
-                console.log(respuesta);
-                
+
                 if(respuesta && respuesta.procesoExitoso) {
                     let data : any = respuesta.data;
                     if(data.tipo == Constantes.FISICO) {

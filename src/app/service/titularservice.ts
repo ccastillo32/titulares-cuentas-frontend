@@ -45,6 +45,25 @@ export class TitularService {
         );
     }
 
+    actualizarTitular(datosAGuardar : Titular) : Observable<any> {
+        let url = (datosAGuardar.tipo == Constantes.FISICO) ? Constantes.ENDPOINT_TITULAR_FISICO
+                                                            : Constantes.ENDPOINT_TITULAR_JURIDICO;
+        let headers : any = { headers: this.httpHeaders };
+        return this.http.put( url, datosAGuardar, headers ).pipe(
+            map( response => this.respuestaExitosa(response) ),
+            catchError(err => this.capturarExcepcion(err) )
+        );
+    }
+
+    eliminarTitular(cuit : string) : Observable<any> {
+        let cuitSinGuiones = this.eliminarGuionesCuit(cuit);
+        let headers : any = { headers: this.httpHeaders };
+        return this.http.delete( Constantes.ENDPOINT_TITULARES + '/' + cuitSinGuiones, headers ).pipe(
+            map( response => this.respuestaExitosa(response) ),
+            catchError(err => this.capturarExcepcion(err) )
+        );
+    }
+
     private getHeaders() : any {
         let httpHeaders : HttpHeaders = new HttpHeaders({
             'Content-Type' : 'application/json'

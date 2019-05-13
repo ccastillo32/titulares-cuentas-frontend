@@ -84,10 +84,10 @@
         <div id="botones">
     
             <button (click)="crearTitular()">
-                Crear
+                {{ modoEdicion ? 'Actualizar' : 'Crear' }}
             </button>
 
-            <button
+            <button (click)="cancelar()"
                     class="botonSecundario">
                     Cancelar
             </button>

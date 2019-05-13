@@ -27,8 +27,9 @@
                 <th>DNI</th>
                 <th>Nombre</th>
                 <th>Razón social</th>
-                <th>Anio fundacion</th>
+                <th>Año de fundacion</th>
                 <th>Editar</th>
+                <th>Eliminar</th>
             </thead>
             <tbody>
                 <tr *ngFor="let titular of listado">
@@ -52,10 +53,15 @@
                            [routerLink]="">Editar</a>
                     </td>
 
+                    <td>
+                        <a (click)="eliminarTitular(titular.cuit)"
+                            [routerLink]="">Eliminar</a>
+                    </td>
+
                 </tr>
 
                 <tr *ngIf="!listado?.length">
-                    <td colspan="7">Sin datos</td>
+                    <td colspan="8">Sin datos</td>
                 </tr>
 
             </tbody>
