@@ -81,7 +81,12 @@ export class CrearTitularComponent implements OnInit {
     }
 
     private getTitularJuridico() : TitularJuridico {
-        return null;
+        let titular : TitularJuridico = new TitularJuridico();
+        titular.cuit = this.cuit;
+        titular.tipo = Constantes.JURIDICO;
+        titular.razonSocial = this.razonSocial;
+        titular.anioFundacion = this.anioFundacion;
+        return titular;
     }
 
     private irAlListado() : void {

@@ -28,7 +28,8 @@ export class TitularService {
     }
 
     crearTitular(datosAGuardar : Titular) : Observable<any> {
-        let url = (datosAGuardar.tipo == Constantes.FISICO) ? Constantes.ENDPOINT_TITULAR_FISICO : null;
+        let url = (datosAGuardar.tipo == Constantes.FISICO) ? Constantes.ENDPOINT_TITULAR_FISICO
+                                                            : Constantes.ENDPOINT_TITULAR_JURIDICO;
         let headers : any = { headers: this.httpHeaders };
         return this.http.post( url, datosAGuardar, headers ).pipe(
             map( response => this.respuestaExitosa(response) ),
