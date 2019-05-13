@@ -16,16 +16,18 @@
                         <tr>
                             <td class="nombreCampo">CUIT: *</td>
                             <td class="inputCampo">
-                                <input type="text" name="cuit" [(ngModel)]="cuit" maxlength="13">
+                                <input type="text" name="cuit" [(ngModel)]="cuit" maxlength="13" *ngIf="!modoEdicion">
+                                <label *ngIf="modoEdicion">{{ cuit }}</label>
                             </td>
                         </tr>
 
                         <tr>
                             <td class="nombreCampo">Tipo: *</td>
                             <td class="inputCampo">
-                                <select name="tipo" [(ngModel)]="tipo">
+                                <select name="tipo" [(ngModel)]="tipo" *ngIf="!modoEdicion">
                                     <option *ngFor="let opcion of getSelectorTipoTitular()">{{ opcion }}</option>
                                 </select>
+                                <label *ngIf="modoEdicion">{{ tipo }}</label>
                             </td>
                         </tr>
 
@@ -34,7 +36,8 @@
                                 <tr>
                                     <td class="nombreCampo">DNI: *</td>
                                     <td class="inputCampo">
-                                        <input type="text" name="dni" [(ngModel)]="dni" maxlength="8">
+                                        <input type="text" name="dni" [(ngModel)]="dni" maxlength="8" *ngIf="!modoEdicion">
+                                        <label *ngIf="modoEdicion">{{ dni }}</label>
                                     </td>
                                 </tr>
 

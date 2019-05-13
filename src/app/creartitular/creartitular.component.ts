@@ -17,6 +17,7 @@ import { RespuestaServicio } from '../service/respuestaservicio';
 export class CrearTitularComponent implements OnInit {
 
     mensajeError : string;
+    modoEdicion : boolean;
 
     titulo: string;
     cuit: string;
@@ -105,9 +106,9 @@ export class CrearTitularComponent implements OnInit {
         });
     }
 
-    private 
-
     private iniciarDatos() : void {
+        this.modoEdicion = true;
+        this.titulo = 'Editar titular';
         this.service.buscarTitular(this.cuit).subscribe(
             response => {
                 let respuesta : RespuestaServicio = response.value ? response.value as RespuestaServicio
@@ -116,7 +117,17 @@ export class CrearTitularComponent implements OnInit {
                 console.log(respuesta);
                 
                 if(respuesta && respuesta.procesoExitoso) {
-                    console.log('iniciar');
+                    let data : any = respuesta.data;
+                    if(data.tipo == Constantes.FISICO) {
+                        this.tipo = Constantes.FISICO;
+                        this.dni = data.dni;
+                        this.nombre = data.nombre;
+                        this.apellido = data.apellido;
+                    } else if(data.tipo == Constantes.JURIDICO) {
+                        this.tipo = Constantes.JURIDICO;
+                        this.razonSocial = data.razonSocial;
+                        this.anioFundacion = data.anioFundacion;
+                    }
                 } else if(respuesta && respuesta.errores) {
                     this.mensajeError = respuesta.getMensaje();
                 } else {
