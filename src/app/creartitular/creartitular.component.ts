@@ -11,7 +11,7 @@ import { RespuestaServicio } from '../service/respuestaservicio';
 import { Validador } from '../util/validador'; 
 
 @Component({
-    template: 'crear-titular',
+    selector: 'crear-titular',
     templateUrl: './creartitular.component.html',
     styleUrls: ['./creartitular.component.css']
 })
