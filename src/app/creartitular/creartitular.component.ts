@@ -7,7 +7,8 @@ import { Titular } from '../model/titular';
 import { TitularFisico } from '../model/titularfisico';
 import { TitularJuridico } from '../model/titularjuridico';
 import { TitularService } from '../service/titularservice';
-import { RespuestaServicio } from '../service/respuestaservicio'; 
+import { RespuestaServicio } from '../service/respuestaservicio';
+import { Validador } from '../util/validador'; 
 
 @Component({
     template: 'crear-titular',
@@ -50,8 +51,13 @@ export class CrearTitularComponent implements OnInit {
     crearTitular() : void {
         let titular : Titular = this.tipo == Constantes.FISICO ? this.getTitularFisico() 
                                                                : this.getTitularJuridico();
-        // TODO: Validar
-        this.llamarServicioCreacion(titular);
+
+        let mensajeValidacion = Validador.validarTitularFisico( titular as TitularFisico );
+        if(!mensajeValidacion) {
+            this.llamarServicioCreacion(titular);
+        } else {
+            this.mensajeError = mensajeValidacion;
+        }
 
     }
 
